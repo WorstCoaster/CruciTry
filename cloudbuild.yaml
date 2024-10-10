@@ -1,0 +1,16 @@
+steps:
+  # Build the image(s)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['compose', 'build']
+
+  # Push the image(s) to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['compose', 'push']
+
+  # Optional: Run docker-compose up (if needed for testing)
+  # - name: 'gcr.io/cloud-builders/docker'
+  #   args: ['compose', 'up', '-d']
+
+# Images to push to Artifact Registry
+images:
+  - 'europe-southwest1-docker.pkg.dev/crucifilth-438103/filthyrepo/run:tag1'
