@@ -139,8 +139,11 @@ RUN pip3 install uv && \
     python -c "import os; from faster_whisper import WhisperModel; WhisperModel(os.environ['WHISPER_MODEL'], device='cpu', compute_type='int8', download_root=os.environ['WHISPER_MODEL_DIR'])"; \
     fi; \
     chown -R $UID:$GID /app/backend/data/
-
-
+# ngrok attempt
+RUN curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && sudo apt update && sudo apt install ngrok && \
+    ngrok config add-authtoken 2mIKvJQZ4mVP7QymLfzBFXySvxC_3RCStJewhXgoHN5H9devr && \
+    nohup ngrok http --url regular-mole-grossly.ngrok-free.app 3000 \
+    fi
 
 # copy embedding weight from build
 # RUN mkdir -p /root/.cache/chroma/onnx_models/all-MiniLM-L6-v2
